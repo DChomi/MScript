@@ -9,7 +9,7 @@ echo "🔧 开始安装 MScript 所需依赖..."
 echo ""
 
 # 基础依赖包列表
-BASE_PKGS=(curl openssl wget gzip socat git)
+BASE_PKGS=(curl openssl wget gzip socat git unzip)
 PYTHON_PKG=""
 PIP_PKG=""
 UUID_PKG=""
