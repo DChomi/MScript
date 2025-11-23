@@ -54,7 +54,7 @@ wget https://github.com/uwaru/MScript/archive/refs/heads/main.zip&&unzip main.zi
 2. 安装依赖
 
 ```
-bash install_dependencies.sh
+wget https://raw.githubusercontent.com/uwaru/MScript/refs/heads/main/install_dependencies.sh&&bash install_dependencies.sh
 ```
 
 3. 运行主程序
@@ -63,19 +63,121 @@ bash install_dependencies.sh
 bash run.sh
 ```
 
-### 手动安装依赖
+## 手动安装依赖
 
-如果一键安装失败,可以手动安装:
+如果一键安装失败，可以手动安装：
+
+### Ubuntu/Debian 系统
 
 ```bash
-# Ubuntu/Debian
+# 更新软件源
 apt update
-apt install -y curl wget gzip openssl uuid-runtime socat python3 python3-pip
-pip3 install sh
 
-# CentOS/RHEL
-yum install -y curl wget gzip openssl util-linux socat python3 python3-pip
+# 安装系统依赖
+apt install -y curl wget gzip openssl uuid-runtime socat git unzip python3 python3-pip
+
+# 安装 Python 虚拟环境支持（重要！）
+apt install -y python3-venv
+
+# 安装 Python 包
 pip3 install sh
+```
+
+### CentOS/RHEL 7 系统
+
+```bash
+# 更新软件源
+yum update -y
+
+# 安装系统依赖
+yum install -y curl wget gzip openssl util-linux socat git unzip tar python3 python3-pip
+
+# CentOS/RHEL 的 Python3 通常已包含 venv 模块
+# 如果 python3 -m venv 不可用，安装 virtualenv
+yum install -y python3-virtualenv
+
+# 安装 Python 包
+pip3 install sh
+```
+
+### CentOS/RHEL 8+ / Fedora 系统
+
+```bash
+# 更新软件源
+dnf upgrade -y
+
+# 安装系统依赖
+dnf install -y curl wget gzip openssl util-linux socat git unzip python3 python3-pip
+
+# 如果需要，安装 virtualenv
+dnf install -y python3-virtualenv
+
+# 安装 Python 包
+pip3 install sh
+```
+
+### Arch Linux 系统
+
+```bash
+# 同步并更新系统
+pacman -Syu --noconfirm
+
+# 安装系统依赖
+pacman -S --noconfirm curl wget gzip openssl util-linux socat git unzip python python-pip
+
+# Arch 的 Python 已包含 venv 模块
+# 安装 Python 包
+pip3 install sh
+```
+
+### Alpine Linux 系统
+
+```bash
+# 更新软件源
+apk update
+
+# 安装系统依赖
+apk add --no-cache curl wget gzip openssl util-linux socat git unzip python3 py3-pip
+
+# Alpine 的 Python3 已包含 venv 模块
+# 安装 Python 包
+pip3 install sh
+```
+
+### 验证安装
+
+```bash
+# 检查 Python 版本（需要 3.6+）
+python3 --version
+
+# 检查 venv 模块是否可用
+python3 -m venv --help
+
+# 检查 pip
+pip3 --version
+
+# 检查其他工具
+curl --version
+git --version
+uuidgen --version
+```
+
+### 创建虚拟环境（在 MScript-main 目录中）
+
+```bash
+cd MScript-main
+
+# 创建虚拟环境
+python3 -m venv mscript-env
+
+# 激活虚拟环境
+source mscript-env/bin/activate
+
+# 在虚拟环境中安装 Python 包
+pip install sh
+
+# 退出虚拟环境
+deactivate
 ```
 
 ## 📚 详细文档
@@ -284,6 +386,12 @@ rm -rf /root/.config/mihomo
 rm /usr/local/bin/mihomo
 rm /etc/systemd/system/mihomo.service
 systemctl daemon-reload
+```
+
+3.如需完全删除脚本文件请在用户目录下运行如下命令
+
+```bash
+rm MScript-main -r
 ```
 
 </details>
