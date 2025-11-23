@@ -112,6 +112,134 @@ class MihomoBase(ABC):
             except:
                 return "获取失败"
 
+    # ============================= 通用配置获取方法 =============================
+    # get_domain_input(self, prompt): 获取并验证域名输入
+    # get_email_input(self, prompt): 获取并验证邮箱输入
+    # get_port_input(self, prompt): 获取端口配置
+    # get_password_or_uuid_input(self, use_uuid, prompt_type): 获取密码或UUID配置
+    # get_cert_type_choice(self): 选择证书类型
+    # confirm_config(self, config_dict): 确认配置信息
+
+    def get_domain_input(self, prompt="请输入您的域名(例如: proxy.example.com): "):
+        """获取并验证域名输入"""
+        while True:
+            domain = input(prompt).strip()
+            if not domain:
+                print("❌ 域名不能为空")
+                continue
+
+            if not self.validate_domain(domain):
+                print("❌ 域名格式不正确")
+                continue
+            return domain
+
+    def get_email_input(self, prompt="请输入您的邮箱(用于接收证书通知): "):
+        """获取并验证邮箱输入"""
+        while True:
+            email = input(prompt).strip()
+            if not email:
+                print("❌ 邮箱不能为空")
+                continue
+
+            if not self.validate_email(email):
+                print("❌ 邮箱格式不正确")
+                continue
+            return email
+
+    def get_port_input(self, prompt="请输入端口号(留空则随机生成 20000-60000): "):
+        """获取端口配置"""
+        port_input = input(prompt).strip()
+
+        if port_input:
+            try:
+                port = int(port_input)
+                if port < 1 or port > 65535:
+                    print("❌ 端口号必须在 1-65535 之间,使用随机端口")
+                    port = self.random_free_port()
+                elif port < 1024:
+                    print("⚠️ 警告: 使用小于 1024 的端口需要 root 权限")
+            except ValueError:
+                print("❌ 无效的端口号,使用随机端口")
+                port = self.random_free_port()
+        else:
+            port = self.random_free_port()
+
+        print(f"✅ 使用端口: {port}")
+        return port
+
+    def get_password_or_uuid_input(self, use_uuid=False, prompt_type="密码"):
+        """获取密码或UUID配置
+
+        Args:
+            use_uuid: True表示生成UUID, False表示生成密码
+            prompt_type: 提示文本类型
+        """
+        if use_uuid:
+            prompt = f"请输入 UUID(留空则随机生成): "
+        else:
+            prompt = f"请输入节点{prompt_type}(留空则随机生成 UUID): "
+
+        value = input(prompt).strip()
+
+        if not value:
+            value = sh.uuidgen().strip()
+            if use_uuid:
+                print(f"✅ 生成随机 UUID: {value}")
+            else:
+                print(f"✅ 生成随机密码: {value}")
+        else:
+            if use_uuid:
+                print(f"✅ 使用自定义 UUID")
+            else:
+                print(f"✅ 使用自定义{prompt_type}")
+
+        return value
+
+    def get_cert_type_choice(self):
+        """选择证书类型
+
+        Returns:
+            bool: True表示使用自签证书, False表示使用正式证书
+        """
+        print("\n📜 证书类型:")
+        print("  1. 使用 acme.sh 申请正式证书 (推荐)")
+        print("  2. 使用自签证书 (需要客户端跳过证书验证)")
+
+        while True:
+            cert_choice = input("\n请选择证书类型 (1/2): ").strip()
+            if cert_choice in ['1', '2']:
+                break
+            print("❌ 无效选项,请重新输入")
+
+        use_self_signed = (cert_choice == '2')
+
+        if use_self_signed:
+            print("\n⚠️ 警告: 使用自签证书需要:")
+            print("   - 客户端开启跳过证书验证 'skip-cert-verify: true'")
+            print("   - 或允许使用不安全的证书(AllowInsecure)")
+
+        return use_self_signed
+
+    def confirm_config(self, config_dict):
+        """确认配置信息
+
+        Args:
+            config_dict: 配置信息字典
+
+        Returns:
+            bool: True表示确认, False表示取消
+        """
+        print(f"\n📋 配置信息确认:")
+        for key, value in config_dict.items():
+            print(f"  {key}: {value}")
+        print()
+
+        confirm = input("确认无误?(y/n): ").strip().lower()
+        if confirm not in ['y', 'yes']:
+            print("❌ 已取消")
+            return False
+        return True
+
     # ============================= 证书相关 =============================
     # validate_domain(self, domain): 验证域名格式
     # install_acme_sh(self, email): 验证邮箱格式

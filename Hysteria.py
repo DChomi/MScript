@@ -24,87 +24,26 @@ class HysteriaInstaller(MihomoBase):
         print("=" * 42 + "\n")
 
         # 获取域名
-        while True:
-            domain = input("请输入您的域名(例如: proxy.example.com): ").strip()
-            if not domain:
-                print("❌ 域名不能为空")
-                continue
-
-            if not self.validate_domain(domain):
-                print("❌ 域名格式不正确")
-                continue
-            break
+        domain = self.get_domain_input()
 
         # 选择证书类型
-        print("\n📜 证书类型:")
-        print("  1. 使用 acme.sh 申请正式证书 (推荐)")
-        print("  2. 使用自签证书 (需要客户端跳过证书验证)")
+        use_self_signed = self.get_cert_type_choice()
 
-        while True:
-            cert_choice = input("\n请选择证书类型 (1/2): ").strip()
-            if cert_choice in ['1', '2']:
-                break
-            print("❌ 无效选项,请重新输入")
-
-        use_self_signed = (cert_choice == '2')
-
-        if use_self_signed:
-            print("\n⚠️ 警告: 使用自签证书需要:")
-            print("   - 客户端开启跳过证书验证 'skip-cert-verify: true'")
-            print("   - 或允许使用不安全的证书(AllowInsecure)")
-            email = None
-        else:
-            # 获取邮箱
-            while True:
-                email = input("\n请输入您的邮箱(用于接收证书通知): ").strip()
-                if not email:
-                    print("❌ 邮箱不能为空")
-                    continue
-
-                if not self.validate_email(email):
-                    print("❌ 邮箱格式不正确")
-                    continue
-                break
+        # 获取邮箱(仅在使用正式证书时)
+        email = None if use_self_signed else self.get_email_input()
 
         # 获取端口
         print("\n📌 端口配置:")
-        port_input = input("请输入端口号(留空则随机生成 20000-60000): ").strip()
-
-        if port_input:
-            try:
-                port = int(port_input)
-                if port < 1 or port > 65535:
-                    print("❌ 端口号必须在 1-65535 之间,使用随机端口")
-                    port = self.random_free_port()
-                elif port < 1024:
-                    print("⚠️ 警告: 使用小于 1024 的端口需要 root 权限")
-            except ValueError:
-                print("❌ 无效的端口号,使用随机端口")
-                port = self.random_free_port()
-        else:
-            port = self.random_free_port()
-
+        port = self.get_port_input()
         print(f"✅ 使用端口: {port}")
 
         # 获取用户名
         print("\n👤 用户配置:")
-        username = input("请输入用户名(留空则随机生成 UUID): ").strip()
-
-        if not username:
-            username = sh.uuidgen().strip()
-            print(f"✅ 生成随机用户名(UUID): {username}")
-        else:
-            print(f"✅ 使用自定义用户名: {username}")
+        username = self.get_password_or_uuid_input(use_uuid=False, prompt_type="用户名")
 
         # 获取密码
         print("\n🔑 密码配置:")
-        password = input("请输入密码(留空则随机生成 UUID): ").strip()
-
-        if not password:
-            password = sh.uuidgen().strip()
-            print(f"✅ 生成随机密码: {password}")
-        else:
-            print(f"✅ 使用自定义密码")
+        password = self.get_password_or_uuid_input(use_uuid=False, prompt_type="密码")
 
         # 带宽配置
         print("\n🚀 带宽配置 (单位: Mbps):")

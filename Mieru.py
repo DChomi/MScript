@@ -37,22 +37,7 @@ class MieruInstaller(MihomoBase):
 
         # 获取端口
         print("\n📌 端口配置:")
-        port_input = input("请输入端口号(留空则随机生成 20000-60000): ").strip()
-
-        if port_input:
-            try:
-                port = int(port_input)
-                if port < 1 or port > 65535:
-                    print("❌ 端口号必须在 1-65535 之间,使用随机端口")
-                    port = self.random_free_port()
-                elif port < 1024:
-                    print("⚠️ 警告: 使用小于 1024 的端口需要 root 权限")
-            except ValueError:
-                print("❌ 无效的端口号,使用随机端口")
-                port = self.random_free_port()
-        else:
-            port = self.random_free_port()
-
+        port = self.get_port_input()
         print(f"✅ 使用端口: {port}")
 
         # 获取用户名
@@ -67,13 +52,7 @@ class MieruInstaller(MihomoBase):
 
         # 获取密码
         print("\n🔑 密码配置:")
-        password = input("请输入密码(留空则随机生成 UUID): ").strip()
-
-        if not password:
-            password = sh.uuidgen().strip()
-            print(f"✅ 生成随机密码: {password}")
-        else:
-            print(f"✅ 使用自定义密码")
+        password = self.get_password_or_uuid_input(use_uuid=False, prompt_type="密码")
 
         # 确认配置
         print(f"\n📋 配置信息确认:")
