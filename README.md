@@ -30,7 +30,7 @@ MScript 是一个基于 Mihomo 的多协议部署管理工具,提供友好的交
 | **AnyTLS**    | ✅        | ❌            | 安全的 TLS 加密协议        |
 | **Vless**     | ✅        | ✅            | 支持 xtls-rprx-vision 流控 |
 | **Trojan**    | ✅        | ✅            | 伪装成 HTTPS 流量          |
-| **Mieru**     | ✅        | ❌            | 简单轻量的代理协议         |
+| **Mieru**     | ❌        | ❌            | 简单轻量的代理协议         |
 | **TUIC V5**   | ✅        | ❌            | 基于 QUIC 的高性能代理     |
 | **Hysteria2** | ✅        | ❌            | 专为不稳定网络优化         |
 
