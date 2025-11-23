@@ -1,13 +1,12 @@
-# MScript - 基于Mihomo的服务端多协议一键部署脚本
+# MScript - 基于 Mihomo 的服务端多协议一键部署脚本
 
 <div align="center">
-
 
 **一键部署多种代理协议的自动化脚本**
 
 </div>
 
-------
+---
 
 ## 📖 简介
 
@@ -27,12 +26,12 @@ MScript 是一个基于 Mihomo 的多协议部署管理工具,提供友好的交
 
 | 协议          | TLS 模式 | Reality 模式 | 特点                       |
 | ------------- | -------- | ------------ | -------------------------- |
-| **AnyTLS**    | ✅        | ❌            | 安全的 TLS 加密协议        |
-| **Vless**     | ✅        | ✅            | 支持 xtls-rprx-vision 流控 |
-| **Trojan**    | ✅        | ✅            | 伪装成 HTTPS 流量          |
-| **Mieru**     | ❌        | ❌            | 简单轻量的代理协议         |
-| **TUIC V5**   | ✅        | ❌            | 基于 QUIC 的高性能代理     |
-| **Hysteria2** | ✅        | ❌            | 专为不稳定网络优化         |
+| **AnyTLS**    | ✅       | ❌           | 安全的 TLS 加密协议        |
+| **Vless**     | ✅       | ✅           | 支持 xtls-rprx-vision 流控 |
+| **Trojan**    | ✅       | ✅           | 伪装成 HTTPS 流量          |
+| **Mieru**     | ❌       | ❌           | 简单轻量的代理协议         |
+| **TUIC V5**   | ✅       | ❌           | 基于 QUIC 的高性能代理     |
+| **Hysteria2** | ✅       | ❌           | 专为不稳定网络优化         |
 
 ## 🚀 快速开始
 
@@ -45,7 +44,7 @@ MScript 是一个基于 Mihomo 的多协议部署管理工具,提供友好的交
 
 ### 一键安装
 
-1. 下载仓库并设置工作目录(这一步可能需要先安装unzip，请使用sudo apt install unzip命令安装。)
+1. 下载仓库并设置工作目录(这一步可能需要先安装 unzip，请使用 sudo apt install unzip 命令安装。)
 
 ```bash
 wget https://github.com/uwaru/MScript/archive/refs/heads/main.zip&&unzip main.zip&&cd MScript-main
@@ -63,7 +62,7 @@ bash install_dependencies.sh
 bash run.sh
 ```
 
-**注意：若要选择使用自签证书，请在一开始的输入域名处输入服务器IP。若有自签任意域名证书需求，请在最后导入客户端配置后自行将服务器地址从你自签的域名改为IP，并在SNI处填写你之前输入的域名。**
+**注意：若要选择使用自签证书，请在一开始的输入域名处输入服务器 IP。若有自签任意域名证书需求，请在最后导入客户端配置后自行将服务器地址从你自签的域名改为 IP，并在 SNI 处填写你之前输入的域名。**
 
 ## 手动安装依赖
 
@@ -331,9 +330,6 @@ sudo firewall-cmd --reload
 
 <details> <summary><b>Q: 证书申请失败怎么办?</b></summary>
 
-
-
-
 A: 请检查:
 
 1. 域名是否正确解析到服务器 IP
@@ -426,33 +422,30 @@ rm MScript-main -r
 - [acmesh-official/acme.sh](https://github.com/acmesh-official/acme.sh) - SSL 证书管理
 - [Let's Encrypt](https://letsencrypt.org/) - 免费 SSL 证书
 - [Mihomo Scripts](https://github.com/iahfdoa/mihomo-scripts) - 本项目部分代码引用自该项目
-- [Claude ](https://claude.ai/)- 特别鸣谢！天下才共一石，Claude独得9.5斗，我得0.5斗
+- [Claude ](https://claude.ai/)- 特别鸣谢！天下才共一石，Claude 独得 9.5 斗，我得 0.5 斗
 
 ## ⚠️ 免责声明
 
 本工具仅供学习交流使用,请遵守当地法律法规。使用本工具产生的任何后果由使用者自行承担。
 
-代码基本为AI生成，文档也为AI生成。本人代码能力较弱，BUG反馈后处理较慢请见谅。我可以保证截止代码完成时代码中每一个模块均实际测试过（在Ubuntu22.04.5 LTS环境下）。我主要是做一个抛砖引玉的工作，希望有大佬能帮助完善该脚本。
+代码基本为 AI 生成，文档也为 AI 生成。本人代码能力较弱，BUG 反馈后处理较慢请见谅。我可以保证截止代码完成时代码中每一个模块均实际测试过（在 Ubuntu22.04.5 LTS 环境下）。我主要是做一个抛砖引玉的工作，希望有大佬能帮助完善该脚本。
 
 ## 📄 下一步计划
 
-1. 听取反馈，及时解决存在的BUG。
+1. 听取反馈，及时解决存在的 BUG。
 2. 进一步组织代码，将协议部署模块类目前共有的一些方法提升到基类里。
-3. 通过转为使用pyyaml生成配置文件等操作使代码更易读且更便于维护。
-4. 添加shadowsocks等协议的支持。
-5. 添加对Docker部署的支持。
+3. 通过转为使用 pyyaml 生成配置文件等操作使代码更易读且更便于维护。
+4. 添加 shadowsocks 等协议的支持。
+5. 添加对 Docker 部署的支持。
 6. ......
 
 ## 📧 联系方式
 
 - Issue: [GitHub Issues](https://github.com/uwaru/MScript/issues)
 
-------
+---
 
 <div align="center">
-
-
-
 
 **如果这个项目对你有帮助,请给个 ⭐ Star 支持一下!**
 
