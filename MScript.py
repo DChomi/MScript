@@ -13,6 +13,7 @@ from Tuic import TuicInstaller
 from Hysteria import HysteriaInstaller
 from Trojan import TrojanInstaller
 from VlessEncryption import VlessEncryptionInstaller
+from ShadowSocks import ShadowSocksInstaller
 
 
 class MihomoManager:
@@ -55,6 +56,11 @@ class MihomoManager:
                 'name': 'VLESS Encryption',
                 'description': 'VLESS Encryption - 后量子安全加密协议',
                 'installer': VlessEncryptionInstaller
+            },
+            '8': {
+                'name': 'Shadowsocks',
+                'description': 'Shadowsocks 协议 - 支持 2022 新版和传统加密方法以及ShadowTLS和Kcp-tun',
+                'installer': ShadowSocksInstaller
             }
         }
 
