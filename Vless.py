@@ -7,6 +7,7 @@ Vless.py - Vless 协议部署模块
 
 import sh
 import sys
+import yaml
 import subprocess
 from BaseClass import MihomoBase
 
@@ -174,42 +175,38 @@ class VlessInstaller(MihomoBase):
 
         self.cert_dir.mkdir(parents=True, exist_ok=True)
 
+        listener = {
+            'name': 'vless-in-1',
+            'type': 'vless',
+            'port': config['port'],
+            'listen': '0.0.0.0',
+            'users': [
+                {
+                    'username': 'user1',
+                    'uuid': config['uuid'],
+                    'flow': 'xtls-rprx-vision'
+                }
+            ]
+        }
+
         if config['use_reality']:
             # Reality 模式配置
-            config_content = f"""listeners:
-  - name: vless-in-1
-    type: vless
-    port: {config['port']}
-    listen: 0.0.0.0
-    users:
-      - username: user1
-        uuid: {config['uuid']}
-        flow: xtls-rprx-vision
-    reality-config:
-      dest: {config['fake_domain']}:443
-      private-key: {config['private_key']}
-      short-id:
-        - "{config['short_id']}"
-      server-names:
-        - {config['fake_domain']}
-"""
+            listener['reality-config'] = {
+                'dest': f"{config['fake_domain']}:443",
+                'private-key': config['private_key'],
+                'short-id': [config['short_id']],
+                'server-names': [config['fake_domain']]
+            }
         else:
             # TLS 模式配置
-            config_content = f"""listeners:
-  - name: vless-in-1
-    type: vless
-    port: {config['port']}
-    listen: 0.0.0.0
-    users:
-      - username: user1
-        uuid: {config['uuid']}
-        flow: xtls-rprx-vision
-    certificate: ./server.crt
-    private-key: ./server.key
-"""
+            listener['certificate'] = './server.crt'
+            listener['private-key'] = './server.key'
+
+        yaml_config = {'listeners': [listener]}
 
         config_file = self.cert_dir / "config.yaml"
-        config_file.write_text(config_content)
+        with open(config_file, 'w', encoding='utf-8') as f:
+            yaml.dump(yaml_config, f, default_flow_style=False, allow_unicode=True)
 
         print("✅ 配置文件生成完成")
 

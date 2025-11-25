@@ -6,6 +6,7 @@ Anytls.py - AnyTLS 协议部署模块
 
 import sh
 import sys
+import yaml
 from BaseClass import MihomoBase
 
 
@@ -58,19 +59,25 @@ class AnyTLSInstaller(MihomoBase):
         """生成 AnyTLS 配置"""
         print("⚙️ 生成 AnyTLS 配置...")
 
-        config_content = f"""listeners:
-  - name: anytls-in-1
-    type: anytls
-    port: {port}
-    listen: 0.0.0.0
-    users:
-      username1: '{password}'
-    certificate: ./server.crt
-    private-key: ./server.key
-"""
+        config = {
+            'listeners': [
+                {
+                    'name': 'anytls-in-1',
+                    'type': 'anytls',
+                    'port': port,
+                    'listen': '0.0.0.0',
+                    'users': {
+                        'username1': password
+                    },
+                    'certificate': './server.crt',
+                    'private-key': './server.key'
+                }
+            ]
+        }
 
         config_file = self.cert_dir / "config.yaml"
-        config_file.write_text(config_content)
+        with open(config_file, 'w', encoding='utf-8') as f:
+            yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
 
         print("✅ 配置文件生成完成")
 

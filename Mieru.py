@@ -6,6 +6,7 @@ Mieru.py - Mieru 协议部署模块
 
 import sh
 import sys
+import yaml
 from BaseClass import MihomoBase
 
 
@@ -75,18 +76,24 @@ class MieruInstaller(MihomoBase):
         # 确保配置目录存在
         self.cert_dir.mkdir(parents=True, exist_ok=True)
 
-        config_content = f"""listeners:
-  - name: mieru-in-1
-    type: mieru
-    port: {port}
-    listen: 0.0.0.0
-    transport: {transport}
-    users:
-      {username}: {password}
-"""
+        config = {
+            'listeners': [
+                {
+                    'name': 'mieru-in-1',
+                    'type': 'mieru',
+                    'port': port,
+                    'listen': '0.0.0.0',
+                    'transport': transport,
+                    'users': {
+                        username: password
+                    }
+                }
+            ]
+        }
 
         config_file = self.cert_dir / "config.yaml"
-        config_file.write_text(config_content)
+        with open(config_file, 'w', encoding='utf-8') as f:
+            yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
 
         print("✅ 配置文件生成完成")
 

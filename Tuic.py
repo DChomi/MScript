@@ -6,6 +6,7 @@ Tuic.py - TUIC V5 协议部署模块
 
 import sh
 import sys
+import yaml
 from urllib.parse import quote
 from BaseClass import MihomoBase
 
@@ -88,25 +89,30 @@ class TuicInstaller(MihomoBase):
         """生成 TUIC V5 配置"""
         print("⚙️ 生成 TUIC V5 配置...")
 
-        config_content = f"""listeners:
-  - name: tuicv5-in
-    type: tuic
-    port: {port}
-    listen: 0.0.0.0
-    users:
-      {username}: '{password}'
-    certificate: ./server.crt
-    private-key: ./server.key
-    congestion-controller: {congestion_controller}
-    max-idle-time: 15000
-    authentication-timeout: 1000
-    alpn:
-      - h3
-    max-udp-relay-packet-size: 1500
-"""
+        config = {
+            'listeners': [
+                {
+                    'name': 'tuicv5-in',
+                    'type': 'tuic',
+                    'port': port,
+                    'listen': '0.0.0.0',
+                    'users': {
+                        username: password
+                    },
+                    'certificate': './server.crt',
+                    'private-key': './server.key',
+                    'congestion-controller': congestion_controller,
+                    'max-idle-time': 15000,
+                    'authentication-timeout': 1000,
+                    'alpn': ['h3'],
+                    'max-udp-relay-packet-size': 1500
+                }
+            ]
+        }
 
         config_file = self.cert_dir / "config.yaml"
-        config_file.write_text(config_content)
+        with open(config_file, 'w', encoding='utf-8') as f:
+            yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
 
         print("✅ 配置文件生成完成")
 

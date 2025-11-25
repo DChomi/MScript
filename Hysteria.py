@@ -6,6 +6,7 @@ Hysteria.py - Hysteria2 协议部署模块
 
 import sh
 import sys
+import yaml
 from urllib.parse import quote
 from BaseClass import MihomoBase
 
@@ -134,35 +135,33 @@ class HysteriaInstaller(MihomoBase):
         """生成 Hysteria2 配置"""
         print("⚙️ 生成 Hysteria2 配置...")
 
-        # 基础配置
-        config_content = f"""listeners:
-  - name: hy2-in
-    type: hysteria2
-    port: {port}
-    listen: 0.0.0.0
-    users:
-      {username}: '{password}'
-    up: {up_mbps}
-    down: {down_mbps}
-    ignore-client-bandwidth: false"""
+        listener = {
+            'name': 'hy2-in',
+            'type': 'hysteria2',
+            'port': port,
+            'listen': '0.0.0.0',
+            'users': {
+                username: password
+            },
+            'up': up_mbps,
+            'down': down_mbps,
+            'ignore-client-bandwidth': False,
+            'masquerade': '',
+            'alpn': ['h3'],
+            'certificate': './server.crt',
+            'private-key': './server.key'
+        }
 
         # 添加混淆配置
         if obfs_type and obfs_password:
-            config_content += f"""
-    obfs: {obfs_type}
-    obfs-password: '{obfs_password}'"""
+            listener['obfs'] = obfs_type
+            listener['obfs-password'] = obfs_password
 
-        # 添加证书和其他配置
-        config_content += """
-    masquerade: ""
-    alpn:
-      - h3
-    certificate: ./server.crt
-    private-key: ./server.key
-"""
+        config = {'listeners': [listener]}
 
         config_file = self.cert_dir / "config.yaml"
-        config_file.write_text(config_content)
+        with open(config_file, 'w', encoding='utf-8') as f:
+            yaml.dump(config, f, default_flow_style=False, allow_unicode=True)
 
         print("✅ 配置文件生成完成")
 
