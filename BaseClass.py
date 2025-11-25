@@ -573,6 +573,7 @@ WantedBy=multi-user.target
             print("   如需使用 Docker 部署,请先安装:")
             print("   - Docker: curl -fsSL https://get.docker.com | sh")
             print("   - 或参考: https://docs.docker.com/engine/install/")
+            print("   或者你可以继续在没有安装Docker的情况下选择Docker部署方式,脚本会帮你安装Docker")
 
         while True:
             choice = input("\n请选择部署方式 (1/2): ").strip()
@@ -580,7 +581,6 @@ WantedBy=multi-user.target
                 return 'systemd'
             elif choice == '2':
                 if not has_docker:
-                    print("❌ Docker 未安装,无法使用此选项")
                     install_choice = input("是否现在安装 Docker? (y/n): ").strip().lower()
                     if install_choice in ['y', 'yes']:
                         self.install_docker()

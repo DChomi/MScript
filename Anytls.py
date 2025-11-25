@@ -161,7 +161,7 @@ class AnyTLSInstaller(MihomoBase):
 
         print("=" * 46 + "\n")
 
-        print("📊 当前服务状态:")
+        print("📊 当前服务状态（Docker方式部署无法查看状态）:")
         try:
             sh.systemctl("status", "mihomo", "--no-pager", "-l", _fg=True)
         except:
@@ -179,11 +179,15 @@ class AnyTLSInstaller(MihomoBase):
             # 检查必要依赖
             self.check_dependencies()
 
+            # 选择部署方式
+            deployment_method = self.get_deployment_method()
+
             # 检测架构
             bin_arch, level = self.detect_architecture()
 
-            # 安装 Mihomo
-            self.install_mihomo(bin_arch, level)
+            # 只有直接部署才需要安装 Mihomo
+            if deployment_method == 'systemd':
+                self.install_mihomo(bin_arch, level)
 
             # 获取部署配置
             domain, email, port, password, use_self_signed = self.get_deployment_config()
@@ -201,8 +205,14 @@ class AnyTLSInstaller(MihomoBase):
             # 生成配置
             self.generate_config(domain, port, password)
 
-            # 创建服务
-            self.create_systemd_service()
+            # 根据部署方式执行不同操作
+            if deployment_method == 'systemd':
+                # 创建 systemd 服务
+                self.create_systemd_service()
+            else:
+                # 创建并启动 Docker 容器
+                self.create_docker_compose_file(self.cert_dir, self.protocol_name, port)
+                self.start_docker_service(self.cert_dir)
 
             # 输出最终信息
             self.print_final_info(domain, port, password, use_self_signed)
